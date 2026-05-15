@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>FamSync — Items</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+  body { font-family: "Google Sans", sans-serif; background: #fff; color: #1B1E28; }
+  button { font-family: "Google Sans", sans-serif; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #E2E6EF; border-radius: 4px; }
+  input::placeholder { color: #9CA3AF; }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="js/data.js?v=39"></script>
+<script type="text/babel" src="js/components.js?v=62"></script>
+<script type="text/babel" src="js/navigation.js?v=47"></script>
+<script type="text/babel" src="js/page-shell.js?v=42"></script>
+<script type="text/babel">
+function ComingSoon({ label }) {
+  return (
+    <div style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", background: "#F5F7FA", gap: 10 }}>
+      <div style={{ fontSize: 32 }}>🚧</div>
+      <div style={{ fontSize: 17, fontWeight: 600, color: "#1B1E28" }}>{label}</div>
+      <div style={{ fontSize: 14, color: "#9CA3AF" }}>Coming soon</div>
+    </div>
+  );
+}
+function Page() {
+  return <PageShell>{() => <ComingSoon label="Items" />}</PageShell>;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<Page />);
+</script>
+</body>
+</html>

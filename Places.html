@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>FamSync — Places</title>
+<link rel="stylesheet" href="colors_and_type.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react@18.3.1/umd/react.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.3.1/umd/react-dom.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.29.0/babel.min.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+  body { font-family: "Google Sans", sans-serif; background: #fff; color: #1B1E28; }
+  button { font-family: "Google Sans", sans-serif; }
+  input, select { font-family: "Google Sans", sans-serif; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #E2E6EF; border-radius: 4px; }
+  input::placeholder { color: #9CA3AF; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes slideDown { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: translateY(0); } }
+  .leaflet-attribution-flag { display: none !important; }
+  .radius-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 2px; background: linear-gradient(to right, #0F6EFF 0%, #0F6EFF var(--pct, 0%), #E2E6EF var(--pct, 0%), #E2E6EF 100%); cursor: pointer; outline: none; border: none; }
+  .radius-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #0F6EFF; box-shadow: 0 2px 8px rgba(15,110,255,0.25); cursor: pointer; transition: box-shadow 0.15s; }
+  .radius-slider::-webkit-slider-thumb:hover { box-shadow: 0 2px 12px rgba(15,110,255,0.45); }
+  .radius-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #fff; border: 2px solid #0F6EFF; box-shadow: 0 2px 8px rgba(15,110,255,0.25); cursor: pointer; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel" src="js/data.js?v=39"></script>
+<script type="text/babel" src="js/components.js?v=63"></script>
+<script type="text/babel" src="js/navigation.js?v=47"></script>
+<script type="text/babel" src="js/page-shell.js?v=42"></script>
+<script type="text/babel" src="js/screen-places.js?v=72"></script>
+<script type="text/babel">
+function PlacesPage() {
+  return <PageShell>{isMobile => <PlacesScreen isMobile={isMobile} />}</PageShell>;
+}
+ReactDOM.createRoot(document.getElementById("root")).render(<PlacesPage />);
+</script>
+</body>
+</html>

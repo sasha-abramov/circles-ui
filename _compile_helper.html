@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js"></script>
+</head>
+<body>
+<div id="out" style="white-space:pre;font-size:10px;overflow:auto;height:100vh"></div>
+<script>
+fetch('_jsx_source.js').then(r=>r.text()).then(src=>{
+  try {
+    const result = Babel.transform(src, {presets:['react']});
+    window._compiled = result.code;
+    document.getElementById('out').textContent = 'DONE:' + result.code.length;
+  } catch(e) {
+    document.getElementById('out').textContent = 'ERROR:' + e.message;
+  }
+});
+</script>
+</body>
+</html>

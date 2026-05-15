@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<title>FamSync — Design System</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="colors_and_type.css">
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="js/data.js?v=36"></script>
+<script type="text/babel" src="js/components.js?v=36"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+  body { font-family: "Google Sans", sans-serif; }
+  button { font-family: "Google Sans", sans-serif; cursor: pointer; }
+  input { font-family: "Google Sans", sans-serif; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-thumb { background: #E2E6EF; border-radius: 4px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const { useState } = React;
+const { DCArtboard, DCSection, DesignCanvas } = window;
+
+/* ── DESIGN TOKENS ───────────────────────────────────────────── */
+const COLORS_BRAND = [
+  { name: "Primary",        value: "#0F6EFF", text: "#fff" },
+  { name: "Primary Hover",  value: "#0D60E0", text: "#fff" },
+  { name: "Primary Light",  value: "#EBF2FF", text: "#0F6EFF" },
+  { name: "Primary Light 2",value: "#E8F1FF", text: "#0F6EFF" },
+];
+const COLORS_TEXT = [
+  { name: "Text Primary",   value: "#1B1E28", text: "#fff" },
+  { name: "Text Secondary", value: "#6B7280", text: "#fff" },
+  { name: "Text Tertiary",  value: "#9CA3AF", text: "#fff" },
+  { name: "Text Disabled",  value: "#C5CBD7", text: "#fff" },
+];
+const COLORS_UI = [
+  { name: "Surface",   value: "#F5F7FA", text: "#1B1E28" },
+  { name: "Border",    value: "#E2E6EF", text: "#1B1E28" },
+  { name: "Divider",   value: "#F0F2F7", text: "#1B1E28" },
+  { name: "Dark Nav",  value: "#1B1E28", text: "#fff" },
+];
+const COLORS_STATUS = [
+  { name: "Success", value: "#34C55A", text: "#fff" },
+  { name: "Error",   value: "#FF3B30", text: "#fff" },
+  { name: "Warning", value: "#FF9500", text: "#fff" },
+];
+const GRADIENTS = [
+  { name: "Sunrise", from: "#F0922A", to: "#EFC03A" },
+  { name: "Violet",  from: "#9B87F5", to: "#7EC8E3" },
+  { name: "Coral",   from: "#FF6B6B", to: "#FFA552" },
+  { name: "Ocean",   from: "#0F6EFF", to: "#00C7BE" },
+  { name: "Rose",    from: "#F857A6", to: "#FF5858" },
+  { name: "Mint",    from: "#2DD16A", to: "#1EDEC2" },
+  { name: "Dusk",    from: "#A18CD1", to: "#FBC2EB" },
+  { name: "Indigo",  from: "#4F5BD5", to: "#A44FD5" },
+];
+const TYPE_SCALE = [
+  { name: "H1",           size: 32, lh: 40, weight: 700 },
+  { name: "H2",           size: 24, lh: 32, weight: 700 },
+  { name: "H3",           size: 20, lh: 28, weight: 500 },
+  { name: "Headline",     size: 17, lh: 20, weight: 500 },
+  { name: "Body",         size: 16, lh: 24, weight: 400 },
+  { name: "Body Bold",    size: 16, lh: 24, weight: 700 },
+  { name: "Caption",      size: 14, lh: 20, weight: 400 },
+  { name: "Caption Bold", size: 14, lh: 20, weight: 700 },
+  { name: "Footnote",     size: 11, lh: 16, weight: 500 },
+];
+const RADII = [
+  { name: "Pill",   value: 100, demo: 44 },
+  { name: "Card",   value: 16,  demo: 56 },
+  { name: "Input",  value: 12,  demo: 44 },
+  { name: "Small",  value: 8,   demo: 32 },
+  { name: "Circle", value: 9999, demo: 44, circle: true },
+];
+
+/* ── SWATCH ──────────────────────────────────────────────────── */
+function Swatch({ name, value, text }) {
+  const [copied, setCopied] = useState(false);
+  const copy = () => {
+    navigator.clipboard?.writeText(value);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
+  };
+  return (
+    <div onClick={copy} style={{ cursor: "pointer", width: 100 }}>
+      <div style={{
+        height: 56, borderRadius: 10, background: value,
+        border: value === "#fff" || value === "#F5F7FA" || value === "#F0F2F7" ? "1px solid #E2E6EF" : "none",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: 11, fontWeight: 700, color: text, marginBottom: 6,
+        transition: "transform 0.1s",
+        transform: copied ? "scale(0.95)" : "scale(1)",
+      }}>
+        {copied ? "Copied!" : ""}
+      </div>
+      <div style={{ fontSize: 11, fontWeight: 600, color: "#1B1E28", lineHeight: "14px" }}>{name}</div>
+      <div style={{ fontSize: 10, color: "#9CA3AF", marginTop: 2, fontFamily: "monospace" }}>{value}</div>
+    </div>
+  );
+}
+
+function GradientSwatch({ name, from, to }) {
+  return (
+    <div style={{ width: 80 }}>
+      <div style={{
+        height: 56, borderRadius: 10,
+        background: `linear-gradient(135deg, ${from}, ${to})`,
+        marginBottom: 6,
+      }} />
+      <div style={{ fontSize: 11, fontWeight: 600, color: "#1B1E28" }}>{name}</div>
+      <div style={{ fontSize: 10, color: "#9CA3AF", fontFamily: "monospace", marginTop: 1 }}>{from}</div>
+      <div style={{ fontSize: 10, color: "#9CA3AF", fontFamily: "monospace" }}>{to}</div>
+    </div>
+  );
+}
+
+/* ── ICON ────────────────────────────────────────────────────── */
+function Icon({ src, size = 24, color = "#9CA3AF" }) {
+  const filters = {
+    "#0F6EFF": "invert(33%) sepia(99%) saturate(2000%) hue-rotate(207deg) brightness(100%) contrast(104%)",
+    "#1B1E28": "invert(9%) sepia(14%) saturate(700%) hue-rotate(192deg) brightness(35%) contrast(95%)",
+    "#6B7280": "invert(47%) sepia(7%) saturate(600%) hue-rotate(180deg) brightness(90%)",
+    "#fff":    "invert(100%)",
+  };
+  const filter = filters[color] || "invert(70%) sepia(6%) saturate(400%) hue-rotate(180deg) brightness(95%)";
+  return <img src={src} width={size} height={size} style={{ filter, display: "block" }} alt="" />;
+}
+
+/* ── CIRCLE AVATAR ────────────────────────────────────────────── */
+let _caIdx = 0;
+function CircleAvatar({ gradient, size = 56 }) {
+  const id = React.useRef(`ca-${_caIdx++}`).current;
+  const iconSize = Math.round(size * 0.52);
+  const colors = (gradient.match(/#[0-9a-fA-F]{3,6}/g) || ["#0F6EFF", "#00C7BE"]);
+  const from = colors[0] || "#0F6EFF";
+  const to   = colors[1] || from;
+  const bgGradient = `linear-gradient(135deg, ${from}4D, ${to}4D)`;
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: "50%",
+      background: bgGradient, flexShrink: 0,
+      display: "flex", alignItems: "center", justifyContent: "center",
+    }}>
+      <svg width={iconSize} height={iconSize} viewBox="0 0 24 24" fill="none">
+        <defs>
+          <linearGradient id={id} x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor={from} />
+            <stop offset="100%" stopColor={to} />
+          </linearGradient>
+        </defs>
+        <path
+          fillRule="evenodd" clipRule="evenodd"
+          d="M17.6584 11.123H17.6334C17.2192 11.1071 16.8941 10.7412 16.9081 10.3034C16.9402 9.29771 16.475 8.64519 15.6638 8.55742C15.2517 8.513 14.9516 8.12382 14.9936 7.6881C15.0366 7.25345 15.4067 6.93301 15.8168 6.97954C17.4253 7.15298 18.4666 8.50983 18.4076 10.3563C18.3936 10.7856 18.0605 11.123 17.6584 11.123ZM17.5763 3.28231C15.8558 2.70066 13.4742 2.94178 11.9877 4.72482C10.4263 2.95447 8.12562 2.69748 6.41713 3.28337C2.50101 4.6159 1.27966 9.41298 2.39398 13.0922C4.15248 18.8781 9.99917 22 12.0017 22C13.7893 22 19.868 18.9373 21.6065 13.0922C22.7208 9.41404 21.4965 4.61695 17.5763 3.28231Z"
+          fill={`url(#${id})`}
+        />
+      </svg>
+    </div>
+  );
+}
+
+/* ── AVATAR STACK ─────────────────────────────────────────────── */
+const SAMPLE_AVATARS = [
+  { initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)" },
+  { initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)" },
+  { initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)" },
+  { initial: "+5", gradient: "#9CA3AF" },
+];
+function AvatarStack({ members, size = 24 }) {
+  return (
+    <div style={{ display: "flex" }}>
+      {members.map((m, i) => (
+        <div key={i} style={{
+          width: size, height: size, borderRadius: "50%",
+          background: m.gradient, border: "1.5px solid #fff",
+          marginLeft: i === 0 ? 0 : -(size * 0.34),
+          display: "flex", alignItems: "center", justifyContent: "center",
+          fontSize: Math.round(size * 0.36), fontWeight: 700, color: "#fff",
+          zIndex: members.length - i, position: "relative",
+        }}>{m.initial}</div>
+      ))}
+    </div>
+  );
+}
+
+/* ── TOGGLE ───────────────────────────────────────────────────── */
+function Toggle({ on, onToggle }) {
+  return (
+    <div onClick={onToggle} style={{
+      width: 44, height: 26, borderRadius: 13,
+      background: on ? "#0F6EFF" : "#E2E6EF",
+      cursor: "pointer", position: "relative", transition: "background 0.2s",
+    }}>
+      <div style={{
+        width: 20, height: 20, borderRadius: "50%",
+        background: "#fff", position: "absolute", top: 3,
+        left: on ? 21 : 3, transition: "left 0.2s",
+        boxShadow: "0 1px 3px rgba(0,0,0,0.2)",
+      }} />
+    </div>
+  );
+}
+
+/* ── LABEL ────────────────────────────────────────────────────── */
+function Label({ children }) {
+  return (
+    <div style={{ fontSize: 11, fontWeight: 600, color: "#9CA3AF", textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: 12 }}>
+      {children}
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ARTBOARD CONTENTS
+═══════════════════════════════════════════════════════════════ */
+
+/* Colors */
+function ColorsArtboard() {
+  return (
+    <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Label>Brand</Label>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {COLORS_BRAND.map(c => <Swatch key={c.name} {...c} />)}
+        </div>
+      </div>
+      <div>
+        <Label>Text</Label>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {COLORS_TEXT.map(c => <Swatch key={c.name} {...c} />)}
+        </div>
+      </div>
+      <div>
+        <Label>UI</Label>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {COLORS_UI.map(c => <Swatch key={c.name} {...c} />)}
+        </div>
+      </div>
+      <div>
+        <Label>Status</Label>
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          {COLORS_STATUS.map(c => <Swatch key={c.name} {...c} />)}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Gradients */
+function GradientsArtboard() {
+  return (
+    <div style={{ padding: 20 }}>
+      <Label>Avatar Gradients</Label>
+      <div style={{ display: "flex", gap: 16, flexWrap: "wrap" }}>
+        {GRADIENTS.map(g => <GradientSwatch key={g.name} {...g} />)}
+      </div>
+    </div>
+  );
+}
+
+/* Typography */
+function TypeArtboard() {
+  return (
+    <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 4 }}>
+      <Label>Type Scale — Google Sans</Label>
+      {TYPE_SCALE.map(t => (
+        <div key={t.name} style={{
+          display: "flex", alignItems: "baseline", gap: 16,
+          padding: "10px 0", borderBottom: "1px solid #F0F2F7",
+        }}>
+          <div style={{ width: 90, fontSize: 11, color: "#9CA3AF", fontWeight: 600, flexShrink: 0 }}>{t.name}</div>
+          <div style={{ fontSize: t.size, lineHeight: `${t.lh}px`, fontWeight: t.weight, color: "#1B1E28" }}>
+            The quick brown fox
+          </div>
+          <div style={{ marginLeft: "auto", fontSize: 11, color: "#C5CBD7", fontFamily: "monospace", flexShrink: 0 }}>
+            {t.size}/{t.lh} w{t.weight}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+/* Buttons */
+function ButtonsArtboard() {
+  const [tog, setTog] = useState(false);
+  return (
+    <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Label>Primary</Label>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
+          <button style={{ height: 44, borderRadius: 100, padding: "0 24px", background: "#0F6EFF", border: "none", color: "#fff", fontSize: 15, fontWeight: 500 }}>New circle</button>
+          <button style={{ height: 36, borderRadius: 100, padding: "0 20px", background: "#0F6EFF", border: "none", color: "#fff", fontSize: 14, fontWeight: 500 }}>Small</button>
+          <button style={{ height: 44, borderRadius: 100, padding: "0 24px", background: "#EBF2FF", border: "none", color: "#0F6EFF", fontSize: 15, fontWeight: 500 }}>+ Invite people</button>
+          <button style={{ height: 44, borderRadius: 100, padding: "0 24px", background: "transparent", border: "none", color: "#0F6EFF", fontSize: 15, fontWeight: 500 }}>Join with code</button>
+        </div>
+      </div>
+      <div>
+        <Label>Danger</Label>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <button style={{ height: 44, borderRadius: 100, padding: "0 24px", background: "#FFF0F0", border: "none", color: "#FF3B30", fontSize: 15, fontWeight: 600 }}>Leave Circle</button>
+          <button style={{ height: 44, borderRadius: 100, padding: "0 24px", background: "#FF3B30", border: "none", color: "#fff", fontSize: 15, fontWeight: 600 }}>Delete</button>
+        </div>
+      </div>
+      <div>
+        <Label>Map Pills (Frosted)</Label>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center", background: "#E8F1FF", padding: 16, borderRadius: 12 }}>
+          <button style={{ height: 44, borderRadius: 12, padding: "0 16px", background: "rgba(255,255,255,0.8)", backdropFilter: "blur(24px)", border: "none", display: "flex", alignItems: "center", gap: 10, fontSize: 14, fontWeight: 700, color: "#6B7280" }}>
+            Members <AvatarStack members={SAMPLE_AVATARS.slice(0, 3)} size={22} />
+          </button>
+          <button style={{ height: 44, width: 128, borderRadius: 12, padding: "0 14px", background: "rgba(255,255,255,0.8)", backdropFilter: "blur(24px)", border: "none", display: "flex", alignItems: "center", gap: 8, fontSize: 14, fontWeight: 700, color: "#6B7280" }}>
+            <Icon src="assets/icons/route.svg" size={18} color="#6B7280" /> Follow Me
+          </button>
+        </div>
+      </div>
+      <div>
+        <Label>Toggle</Label>
+        <div style={{ display: "flex", gap: 16, alignItems: "center" }}>
+          <Toggle on={tog} onToggle={() => setTog(v => !v)} />
+          <span style={{ fontSize: 14, color: "#6B7280" }}>{tog ? "On" : "Off"} — click to toggle</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Inputs */
+function InputsArtboard() {
+  const [val, setVal] = useState("");
+  const [focused, setFocused] = useState(false);
+  return (
+    <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 20 }}>
+      <div>
+        <Label>Default</Label>
+        <div style={{ height: 44, borderRadius: 12, border: "1px solid #E2E6EF", background: "#fff", display: "flex", alignItems: "center", padding: "0 12px", gap: 8, maxWidth: 320 }}>
+          <Icon src="assets/icons/search.svg" size={20} color="#9CA3AF" />
+          <input placeholder="Search Place" style={{ flex: 1, border: "none", outline: "none", fontSize: 14, color: "#1B1E28", background: "transparent", fontFamily: '"Google Sans", sans-serif' }} />
+        </div>
+      </div>
+      <div>
+        <Label>Focus</Label>
+        <div style={{ height: 44, borderRadius: 12, border: `1px solid ${focused ? "#0F6EFF" : "#E2E6EF"}`, background: "#fff", display: "flex", alignItems: "center", padding: "0 12px", gap: 8, maxWidth: 320, transition: "border-color 0.15s" }}>
+          <Icon src="assets/icons/search.svg" size={20} color={focused ? "#0F6EFF" : "#9CA3AF"} />
+          <input
+            placeholder="Type to search…"
+            value={val}
+            onChange={e => setVal(e.target.value)}
+            onFocus={() => setFocused(true)}
+            onBlur={() => setFocused(false)}
+            style={{ flex: 1, border: "none", outline: "none", fontSize: 14, color: "#1B1E28", background: "transparent", fontFamily: '"Google Sans", sans-serif' }}
+          />
+        </div>
+      </div>
+      <div>
+        <Label>Error</Label>
+        <div style={{ height: 44, borderRadius: 12, border: "1px solid #FF3B30", background: "#fff", display: "flex", alignItems: "center", padding: "0 12px", gap: 8, maxWidth: 320 }}>
+          <input defaultValue="bad@" style={{ flex: 1, border: "none", outline: "none", fontSize: 14, color: "#1B1E28", background: "transparent", fontFamily: '"Google Sans", sans-serif' }} />
+        </div>
+        <div style={{ fontSize: 12, color: "#FF3B30", marginTop: 4 }}>Invalid email address</div>
+      </div>
+      <div>
+        <Label>Disabled</Label>
+        <div style={{ height: 44, borderRadius: 12, border: "1px solid #E2E6EF", background: "#F5F7FA", display: "flex", alignItems: "center", padding: "0 12px", maxWidth: 320 }}>
+          <input disabled placeholder="Disabled" style={{ flex: 1, border: "none", outline: "none", fontSize: 14, color: "#C5CBD7", background: "transparent", fontFamily: '"Google Sans", sans-serif' }} />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Avatars */
+function AvatarsArtboard() {
+  return (
+    <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 24 }}>
+      <div>
+        <Label>User Avatars — Sizes</Label>
+        <div style={{ display: "flex", gap: 16, alignItems: "flex-end" }}>
+          {[72, 56, 48, 40, 32, 24].map(s => (
+            <div key={s} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+              <div style={{ width: s, height: s, borderRadius: "50%", background: "linear-gradient(135deg,#0F6EFF,#00C7BE)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: Math.round(s * 0.38), fontWeight: 700, color: "#fff" }}>S</div>
+              <span style={{ fontSize: 10, color: "#9CA3AF" }}>{s}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <Label>Circle Avatars (Heart Icon)</Label>
+        <div style={{ display: "flex", gap: 12, alignItems: "flex-end" }}>
+          {[72, 56, 48, 40].map((s, i) => (
+            <div key={s} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+              <CircleAvatar gradient={`linear-gradient(135deg,${GRADIENTS[i].from},${GRADIENTS[i].to})`} size={s} />
+              <span style={{ fontSize: 10, color: "#9CA3AF" }}>{s}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div>
+        <Label>Avatar Stack</Label>
+        <div style={{ display: "flex", gap: 24, alignItems: "center" }}>
+          <AvatarStack members={SAMPLE_AVATARS.slice(0, 2)} size={32} />
+          <AvatarStack members={SAMPLE_AVATARS.slice(0, 3)} size={28} />
+          <AvatarStack members={SAMPLE_AVATARS} size={24} />
+          <AvatarStack members={SAMPLE_AVATARS} size={20} />
+        </div>
+      </div>
+      <div>
+        <Label>Gradient Palette</Label>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          {GRADIENTS.map(g => (
+            <div key={g.name} style={{ width: 40, height: 40, borderRadius: "50%", background: `linear-gradient(135deg,${g.from},${g.to})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, fontWeight: 700, color: "#fff" }}>
+              {g.name[0]}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Navigation */
+function NavArtboard() {
+  const [active, setActive] = useState("map");
+  const NAV_ITEMS = [
+    { id: "map",     label: "Map",     icon: "assets/icons/map.svg" },
+    { id: "circles", label: "Circles", icon: "assets/icons/circles.svg" },
+    { id: "places",  label: "Places",  icon: "assets/icons/places.svg" },
+    { id: "chat",    label: "Chat",    icon: "assets/icons/chat.svg" },
+    { id: "history", label: "History", icon: "assets/icons/history.svg" },
+  ];
+  const SETTINGS = { id: "settings", label: "Settings", icon: "assets/icons/settings.svg" };
+  return (
+    <div style={{ padding: 20 }}>
+      <Label>Sidebar Nav (Desktop)</Label>
+      <div style={{ width: 80, borderRadius: 16, border: "1px solid #F0F2F7", overflow: "hidden", background: "#fff", display: "inline-flex", flexDirection: "column", alignItems: "center" }}>
+        <div style={{ width: 80, height: 64, display: "flex", alignItems: "center", justifyContent: "center", borderBottom: "1px solid #F0F2F7" }}>
+          <img src="assets/logo-icon.svg" width="28" height="36" alt="FamSync" />
+        </div>
+        <div style={{ display: "flex", flexDirection: "column", padding: "8px 0", gap: 2, width: "100%" }}>
+          {NAV_ITEMS.map(item => {
+            const [hov, setHov] = useState(false);
+            const color = active === item.id ? "#0F6EFF" : hov ? "#6B7280" : "#9CA3AF";
+            return (
+              <button key={item.id} onClick={() => setActive(item.id)}
+                onMouseEnter={() => setHov(true)} onMouseLeave={() => setHov(false)}
+                style={{ width: 72, height: 56, margin: "0 4px", borderRadius: 10, background: "transparent", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3 }}>
+                <Icon src={item.icon} size={22} color={color} />
+                <span style={{ fontSize: 11, fontWeight: 500, color }}>{item.label}</span>
+              </button>
+            );
+          })}
+        </div>
+        <div style={{ borderTop: "1px solid #F0F2F7", padding: "8px 0", width: "100%", display: "flex", justifyContent: "center" }}>
+          <button onClick={() => setActive("settings")} style={{ width: 72, height: 56, borderRadius: 10, background: "transparent", border: "none", cursor: "pointer", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 3 }}>
+            <Icon src={SETTINGS.icon} size={22} color={active === "settings" ? "#0F6EFF" : "#9CA3AF"} />
+            <span style={{ fontSize: 11, fontWeight: 500, color: active === "settings" ? "#0F6EFF" : "#9CA3AF" }}>Settings</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Circle List Item */
+function CircleItemsArtboard() {
+  const [selected, setSelected] = useState(1);
+  const items = [
+    { id: 1, name: "My Family", type: "Family", role: "Admin", gradient: "linear-gradient(135deg,#FF6B6B,#FFA552)", members: SAMPLE_AVATARS.slice(0, 2) },
+    { id: 2, name: "Work",      type: "Work",   role: "Member", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", members: SAMPLE_AVATARS },
+    { id: 3, name: "Beersaurus",type: "Friends",role: "Admin",  gradient: "linear-gradient(135deg,#2DD16A,#1EDEC2)", members: SAMPLE_AVATARS.slice(0, 3) },
+  ];
+  return (
+    <div style={{ padding: 20 }}>
+      <Label>Circle List Item</Label>
+      <div style={{ width: 360, border: "1px solid #F0F2F7", borderRadius: 16, overflow: "hidden" }}>
+        {items.map((c, i) => (
+          <div key={c.id} onClick={() => setSelected(c.id)} style={{
+            display: "flex", alignItems: "center", gap: 12, padding: "12px 16px",
+            background: selected === c.id ? "#F2F7FF" : "#fff",
+            borderBottom: i < items.length - 1 ? "1px solid #F0F2F7" : "none",
+            cursor: "pointer", minHeight: 80, transition: "background 0.12s",
+          }}>
+            <CircleAvatar gradient={c.gradient} size={56} />
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 17, fontWeight: 600, color: "#1B1E28" }}>{c.name}</div>
+              <div style={{ fontSize: 11, color: "#6B7280", marginTop: 3 }}>{c.type} · {c.role}</div>
+            </div>
+            <AvatarStack members={c.members.slice(0, 3)} size={22} />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* Map Controls */
+function MapControlsArtboard() {
+  return (
+    <div style={{ padding: 20, display: "flex", flexDirection: "column", gap: 20 }}>
+      <div>
+        <Label>Map Header (Frosted Glass)</Label>
+        <div style={{
+          width: 500, height: 64, borderRadius: 12, overflow: "hidden",
+          background: "rgba(255,255,255,0.5)", backdropFilter: "blur(24px)",
+          boxShadow: "0 0 48px rgba(27,30,40,0.05), 0 0 16px rgba(0,0,0,0.13)",
+          display: "flex", alignItems: "center", padding: "0 16px", gap: 12,
+          border: "1px solid rgba(255,255,255,0.6)",
+        }}>
+          <CircleAvatar gradient="linear-gradient(135deg,#FF6B6B,#FFA552)" size={40} />
+          <span style={{ fontSize: 20, fontWeight: 700, color: "#1B1E28" }}>My Family</span>
+          <svg width="12" height="8" viewBox="0 0 12 8" fill="none">
+            <path d="M1 1l5 5 5-5" stroke="#9CA3AF" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <div style={{ flex: 1 }} />
+          <div style={{ height: 44, width: 200, borderRadius: 12, background: "#fff", border: "1px solid #E2E6EF", display: "flex", alignItems: "center", gap: 8, padding: "0 12px" }}>
+            <Icon src="assets/icons/search.svg" size={18} color="#9CA3AF" />
+            <span style={{ fontSize: 13, color: "#9CA3AF" }}>Search Place</span>
+          </div>
+          <div style={{ position: "relative" }}>
+            <Icon src="assets/icons/bell-filled.svg" size={24} color="#9CA3AF" />
+            <div style={{ position: "absolute", top: -2, right: -2, width: 9, height: 9, borderRadius: "50%", background: "#22C55E", border: "1.5px solid #fff" }} />
+          </div>
+        </div>
+      </div>
+      <div>
+        <Label>Map Navigation Controls</Label>
+        <div style={{ width: 44, boxShadow: "0 0 16px rgba(0,0,0,0.13)", borderRadius: 10, overflow: "hidden" }}>
+          <div style={{ width: 44, height: 44, background: "rgba(255,255,255,0.9)", borderBottom: "1px solid #F0F2F7", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Icon src="assets/icons/map-mode.svg" size={22} color="#6B7280" />
+          </div>
+          <div style={{ width: 44, height: 44, background: "rgba(255,255,255,0.9)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <Icon src="assets/icons/location-arrow.svg" size={22} color="#6B7280" />
+          </div>
+        </div>
+      </div>
+      <div>
+        <Label>Corner Radii</Label>
+        <div style={{ display: "flex", gap: 16, alignItems: "flex-end" }}>
+          {RADII.map(r => (
+            <div key={r.name} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+              <div style={{
+                width: r.demo, height: r.demo,
+                borderRadius: r.circle ? "50%" : r.value,
+                background: "#EBF2FF", border: "1.5px solid #0F6EFF",
+              }} />
+              <span style={{ fontSize: 10, color: "#9CA3AF" }}>{r.name}</span>
+              <span style={{ fontSize: 9, color: "#C5CBD7", fontFamily: "monospace" }}>{r.value}px</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Members Panel */
+function MembersPanelArtboard() {
+  const members = [
+    { initial: "S", name: "Sara",  gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", status: "19 Plympton Street",   time: "Online",  online: true },
+    { initial: "B", name: "Ben",   gradient: "linear-gradient(135deg,#F857A6,#FF5858)", status: "100 Industrial Way",   time: "Online",  online: true },
+    { initial: "M", name: "Mom",   gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", status: "742 Evergreen Terrace", time: "5m ago",  online: false },
+    { initial: "T", name: "Tanya", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", status: "9th Street",            time: "2h ago",  online: false },
+  ];
+  return (
+    <div style={{ padding: 20 }}>
+      <Label>Members Panel</Label>
+      <div style={{ width: 320, background: "#fff", borderRadius: 16, boxShadow: "0 4px 32px rgba(0,0,0,0.14), 0 0 0 1px rgba(0,0,0,0.04)", overflow: "hidden" }}>
+        <div style={{ height: 52, display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0 16px", borderBottom: "1px solid #F0F2F7" }}>
+          <span style={{ fontSize: 17, fontWeight: 700, color: "#1B1E28" }}>Members</span>
+          <button style={{ width: 32, height: 32, borderRadius: "50%", background: "#F5F7FA", border: "none", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 14, color: "#6B7280" }}>✕</button>
+        </div>
+        {members.map((m, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "12px 16px", borderBottom: "1px solid #F0F2F7", cursor: "pointer" }}>
+            <div style={{ width: 44, height: 44, borderRadius: "50%", background: m.gradient, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 18, fontWeight: 700, color: "#fff" }}>{m.initial}</div>
+            <div style={{ flex: 1, minWidth: 0 }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+                <span style={{ fontSize: 15, fontWeight: 700, color: "#1B1E28" }}>{m.name}</span>
+                {i === 0 && <span style={{ fontSize: 11, color: "#9CA3AF" }}>(you)</span>}
+              </div>
+              <div style={{ fontSize: 13, color: "#9CA3AF", marginTop: 2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.status}</div>
+            </div>
+            <span style={{ fontSize: 13, fontWeight: 500, color: m.online ? "#22C55E" : "#C5CBD7" }}>{m.time}</span>
+          </div>
+        ))}
+        <div style={{ padding: "12px 16px" }}>
+          <button style={{ width: "100%", height: 44, borderRadius: 100, background: "#0F6EFF", border: "none", color: "#fff", fontSize: 15, fontWeight: 500 }}>+ Invite people</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* Places Avatars */
+function PlacesAvatarsArtboard() {
+  const keys = Object.keys(PLACE_ICON_DEFS);
+  return (
+    <div style={{ padding: 20 }}>
+      <Label>Sizes — 72 · 56 · 40 · 32</Label>
+      <div style={{ display: "flex", gap: 20, alignItems: "flex-end", flexWrap: "wrap", marginBottom: 20 }}>
+        {[72, 56, 40, 32].map(s => (
+          <div key={s} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8 }}>
+            <PlacesAvatar gradient={PLACE_ICON_DEFS.home.gradient} icon={`assets/icons/places/${PLACE_ICON_DEFS.home.file}`} size={s} />
+            <span style={{ fontSize: 10, color: "#9CA3AF" }}>{s}px</span>
+          </div>
+        ))}
+      </div>
+      <Label>All Icons — 56px</Label>
+      <div style={{ display: "flex", gap: 12, flexWrap: "wrap", marginBottom: 20 }}>
+        {keys.map(key => (
+          <div key={key} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+            <PlacesAvatar gradient={PLACE_ICON_DEFS[key].gradient} icon={`assets/icons/places/${PLACE_ICON_DEFS[key].file}`} size={56} />
+            <span style={{ fontSize: 11, color: "#6B7280" }}>{key}</span>
+          </div>
+        ))}
+      </div>
+      <Label>All Icons — 40px</Label>
+      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+        {keys.map(key => (
+          <PlacesAvatar key={key} gradient={PLACE_ICON_DEFS[key].gradient} icon={`assets/icons/places/${PLACE_ICON_DEFS[key].file}`} size={40} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ══════════════════════════════════════════════════════════════
+   APP
+═══════════════════════════════════════════════════════════════ */
+function App() {
+  return (
+    <DesignCanvas title="FamSync Design System">
+      <DCSection id="colors" title="Colors & Typography">
+        <DCArtboard id="brand-colors" label="Brand & UI Colors" width={560} height={440}>
+          <ColorsArtboard />
+        </DCArtboard>
+        <DCArtboard id="gradients" label="Avatar Gradients" width={560} height={200}>
+          <GradientsArtboard />
+        </DCArtboard>
+        <DCArtboard id="type" label="Type Scale" width={600} height={420}>
+          <TypeArtboard />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="components" title="Components">
+        <DCArtboard id="buttons" label="Buttons & Controls" width={500} height={380}>
+          <ButtonsArtboard />
+        </DCArtboard>
+        <DCArtboard id="inputs" label="Input Fields" width={400} height={340}>
+          <InputsArtboard />
+        </DCArtboard>
+        <DCArtboard id="avatars" label="Avatars" width={520} height={320}>
+          <AvatarsArtboard />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="places" title="Places">
+        <DCArtboard id="place-avatars" label="Place Avatars" width={560} height={380}>
+          <PlacesAvatarsArtboard />
+        </DCArtboard>
+      </DCSection>
+
+      <DCSection id="navigation" title="Navigation & Layout">
+        <DCArtboard id="nav" label="Sidebar Navigation" width={200} height={420}>
+          <NavArtboard />
+        </DCArtboard>
+        <DCArtboard id="circle-items" label="Circle List Items" width={420} height={340}>
+          <CircleItemsArtboard />
+        </DCArtboard>
+        <DCArtboard id="map-ui" label="Map UI Elements" width={560} height={380}>
+          <MapControlsArtboard />
+        </DCArtboard>
+        <DCArtboard id="members-panel" label="Members Panel" width={380} height={440}>
+          <MembersPanelArtboard />
+        </DCArtboard>
+      </DCSection>
+    </DesignCanvas>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

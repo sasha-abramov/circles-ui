@@ -1,0 +1,4 @@
+.DS_Store
+.netlify/
+.design-canvas.state.json
+node_modules/

@@ -1,0 +1,237 @@
+/* ============================================================
+   FamSync Design System — Colors & Typography
+   Source: FamSync v3.fig
+   ============================================================ */
+
+@font-face {
+  font-family: "Google Sans";
+  src: url("fonts/GoogleSans-Variable.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+}
+
+/* ── BRAND COLORS ─────────────────────────────────────────── */
+:root {
+  --color-primary:           #0F6EFF;
+  --color-primary-hover:     #0D60E0;
+  --color-primary-light:     #EBF2FF;
+  --color-primary-light-2:   #E8F1FF;
+
+  /* ── TEXT ─────────────────────────────────────────────────── */
+  --color-text-primary:      #1B1E28;
+  --color-text-secondary:    #6B7280;
+  --color-text-tertiary:     #9CA3AF;
+  --color-text-disabled:     #C5CBD7;
+  --color-text-inverse:      #FFFFFF;
+  --color-text-muted:        #A6A6B2;
+  --color-text-dark:         #12121A;
+
+  /* ── NEUTRALS / SURFACES ──────────────────────────────────── */
+  --color-white:             #FFFFFF;
+  --color-surface:           #F5F7FA;
+  --color-border:            #E2E6EF;
+  --color-divider:           #F0F2F7;
+  --color-dark:              #1B1E28;
+
+  /* ── STATUS ───────────────────────────────────────────────── */
+  --color-success:           #34C55A;
+  --color-success-alt:       #22C55E;
+  --color-error:             #FF3B30;
+  --color-warning:           #FF9500;
+
+  /* ── AVATAR GRADIENTS ─────────────────────────────────────── */
+  --gradient-sunrise:        linear-gradient(135deg, #FFB347 0%, #FFD460 100%);
+  --gradient-violet:         linear-gradient(135deg, #9B87F5 0%, #7EC8E3 100%);
+  --gradient-coral:          linear-gradient(135deg, #FF6B6B 0%, #FFA552 100%);
+  --gradient-ocean:          linear-gradient(135deg, #0F6EFF 0%, #00C7BE 100%);
+  --gradient-rose:           linear-gradient(135deg, #F857A6 0%, #FF5858 100%);
+  --gradient-mint:           linear-gradient(135deg, #43E97B 0%, #38F9D7 100%);
+  --gradient-dusk:           linear-gradient(135deg, #A18CD1 0%, #FBC2EB 100%);
+  --gradient-indigo:         linear-gradient(135deg, #4F5BD5 0%, #A44FD5 100%);
+
+  /* ── SHADOWS ──────────────────────────────────────────────── */
+  --shadow-card:             0px 0px 16px 0px rgba(0,0,0,0.13);
+  --shadow-topbar:           0px 0px 48px 0px rgba(27,30,40,0.05), 0px 0px 16px 0px rgba(0,0,0,0.13);
+  --shadow-avatar:           0px 4px 4px 0px rgba(0,0,0,0.25);
+  --shadow-sm:               0px 0px 4px 0px rgba(0,0,0,0.25);
+
+  /* ── RADII ─────────────────────────────────────────────────── */
+  --radius-pill:             100px;
+  --radius-card:             16px;
+  --radius-input:            12px;
+  --radius-chip:             100px;
+  --radius-full:             50%;
+
+  /* ── SPACING ──────────────────────────────────────────────── */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   20px;
+  --space-6:   24px;
+  --space-7:   32px;
+  --space-8:   40px;
+  --space-9:   48px;
+  --space-10:  56px;
+  --space-11:  64px;
+
+  /* ── BLUR ─────────────────────────────────────────────────── */
+  --blur-glass:  blur(24px);
+}
+
+/* ============================================================
+   TYPOGRAPHY — Semantic tokens
+   ============================================================ */
+
+/* Base */
+body {
+  font-family: "Google Sans", sans-serif;
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Display / H1 */
+.fs-h1 {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  color: var(--color-text-dark);
+}
+
+/* H2 */
+.fs-h2 {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: var(--color-text-dark);
+}
+
+/* H3 */
+.fs-h3 {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  line-height: 28px;
+  color: var(--color-text-dark);
+}
+
+/* Headline */
+.fs-headline {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  line-height: 20px;
+  color: var(--color-text-primary);
+}
+
+/* Body */
+.fs-body {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+/* Body Bold */
+.fs-body-bold {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--color-text-primary);
+}
+
+/* Caption */
+.fs-caption {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}
+
+/* Caption Bold */
+.fs-caption-bold {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
+  color: var(--color-text-secondary);
+}
+
+/* Footnote */
+.fs-footnote {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--color-text-tertiary);
+}
+
+/* Footnote Bold */
+.fs-footnote-bold {
+  font-family: "Google Sans", sans-serif;
+  font-weight: 700;
+  font-size: 11px;
+  line-height: 16px;
+  color: var(--color-text-tertiary);
+}
+
+/* Logo wordmark — Inter Bold */
+.fs-logo-text {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -0.03em;
+  color: var(--color-text-primary);
+}
+
+/* ── RESPONSIVE SCALE ─────────────────────────────────────── */
+@media (min-width: 768px) {
+  .fs-h1 { font-size: 40px; line-height: 48px; }
+  .fs-h2 { font-size: 32px; line-height: 40px; }
+  .fs-h3 { font-size: 24px; line-height: 32px; }
+}
+@media (min-width: 1280px) {
+  .fs-h1 { font-size: 48px; line-height: 56px; }
+  .fs-h2 { font-size: 36px; line-height: 44px; }
+  .fs-h3 { font-size: 28px; line-height: 36px; }
+}
+
+/* ── UTILITY CLASSES ──────────────────────────────────────── */
+.fs-text-primary   { color: var(--color-text-primary); }
+.fs-text-secondary { color: var(--color-text-secondary); }
+.fs-text-tertiary  { color: var(--color-text-tertiary); }
+.fs-text-disabled  { color: var(--color-text-disabled); }
+.fs-text-blue      { color: var(--color-primary); }
+.fs-text-inverse   { color: var(--color-white); }
+
+.fs-bg-surface  { background-color: var(--color-surface); }
+.fs-bg-white    { background-color: var(--color-white); }
+.fs-bg-dark     { background-color: var(--color-dark); }
+.fs-bg-primary  { background-color: var(--color-primary); }
+
+/* Glass surface */
+.fs-glass {
+  background: rgba(255,255,255,0.8);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+}
+.fs-glass-light {
+  background: rgba(255,255,255,0.5);
+  backdrop-filter: var(--blur-glass);
+  -webkit-backdrop-filter: var(--blur-glass);
+}
+
+/* ── TOAST ANIMATIONS ─────────────────────────────────────── */
+@keyframes toastIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes toastOut {
+  from { opacity: 1; transform: translateY(0); }
+  to   { opacity: 0; transform: translateY(20px); }
+}
