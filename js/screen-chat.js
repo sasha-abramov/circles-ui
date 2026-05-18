@@ -5,6 +5,7 @@ const CHAT_CIRCLES = CIRCLES.filter(c => !c.archived);
 const CHAT_MESSAGES = {
   /* My Family — contains a shared location and an image */
   1: [
+    { id: 27, type: "event", text: "👋 Grandma joined the Circle", date: "Sat, May 3" },
     { id: 1,  sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "text",     text: "Morning everyone! Big family BBQ this Saturday at our place 🎉", time: "9:10 AM", date: "Sat, May 3", isOwn: false },
     { id: 2,  sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "text",     text: "Count me in! Should I bring something?", time: "9:14 AM", date: "Sat, May 3", isOwn: false },
     { id: 3,  sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text",     text: "We'll be there! What time does it start?", time: "9:15 AM", date: "Sat, May 3", isOwn: true, read: true },
@@ -12,42 +13,55 @@ const CHAT_MESSAGES = {
     { id: 5,  sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "text",     text: "I'll be a bit late, finishing up some work stuff", time: "9:20 AM", date: "Sat, May 3", isOwn: false },
     { id: 6,  sender: "Dad",   initial: "D", gradient: "linear-gradient(135deg,#2DD16A,#1EDEC2)", type: "text",     text: "Already fired up the grill 🔥", time: "2:45 PM", date: "Sat, May 3", isOwn: false },
     { id: 7,  sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text",     text: "On our way, 15 mins!", time: "2:47 PM", date: "Sat, May 3", isOwn: true, read: true },
-    { id: 8,  sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "location", location: { street: "742 Evergreen Terrace", city: "Springfield, IL" }, time: "2:52 PM", date: "Sat, May 3", isOwn: true, read: true },
+    { id: 8,  sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "location", location: { street: "742 Evergreen Terrace", city: "Springfield, IL", lat: 39.78172, lng: -89.65007 }, time: "2:52 PM", date: "Sat, May 3", isOwn: true, read: true },
     { id: 9,  sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "text",     text: "Just parked! Where's the dessert table 😂", time: "3:10 PM", date: "Sat, May 3", isOwn: false },
     { id: 10, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "image",    image: { caption: "The grill is ready 🥩🌽", gradient: "linear-gradient(160deg,#fcd34d,#f97316,#dc2626)" }, time: "3:15 PM", date: "Sat, May 3", isOwn: false },
     { id: 11, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "text",     text: "Finally here, sorry for being late! 😅", time: "3:42 PM", date: "Sat, May 3", isOwn: false },
     { id: 12, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text",     text: "No worries, food is still going strong 🍖", time: "3:43 PM", date: "Sat, May 3", isOwn: true, read: true },
     { id: 13, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "text",     text: "Did everyone get home safe?", time: "2:14 PM", date: "Yesterday", isOwn: false },
     { id: 14, sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "text",     text: "Yeah, just got in!", time: "2:15 PM", date: "Yesterday", isOwn: false },
-    { id: 15, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "location", location: { street: "1234 N Cahuenga Blvd", city: "Hollywood, CA" }, time: "2:16 PM", date: "Yesterday", isOwn: true, read: true },
+    { id: 15, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "location", location: { street: "1234 N Cahuenga Blvd", city: "Hollywood, CA", lat: 34.09781, lng: -118.32963 }, time: "2:16 PM", date: "Yesterday", isOwn: true, read: true },
     { id: 16, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "text",     text: "Still at the office, won't be long", time: "2:18 PM", date: "Today", isOwn: false },
     { id: 17, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "text",     text: "Dinner is ready by 7, don't be late 🍝", time: "2:45 PM", date: "Today", isOwn: false },
+    { id: 23, type: "event", text: "📍 Dad arrived at Home", date: "Today" },
     { id: 18, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "image",    image: { caption: "Tonight's dinner 😍", gradient: "linear-gradient(160deg,#f9a8d4,#fcd34d,#6ee7b7)" }, time: "2:47 PM", date: "Today", isOwn: false },
     { id: 19, sender: "Dad",   initial: "D", gradient: "linear-gradient(135deg,#2DD16A,#1EDEC2)", type: "text",     text: "On my way!", time: "3:02 PM", date: "Today", isOwn: false },
     { id: 20, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text",     text: "Heading home now too 🚗", time: "3:05 PM", date: "Today", isOwn: true, read: false },
-    { id: 21, sender: "Ben",  initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "sos", sos: { location: { name: "Griffith Park", address: "4730 Crystal Springs Dr, Los Angeles" } }, time: "3:22 PM", date: "Today", isOwn: false },
-    { id: 22, sender: "You",  initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "sos", sos: { location: { name: "Downtown LA",  address: "350 S Grand Ave, Los Angeles"          } }, time: "4:08 PM", date: "Today", isOwn: true, read: false },
+    { id: 21, sender: "Ben",  initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "sos", sos: { location: { street: "4730 Crystal Springs Dr", city: "Los Angeles, CA", lat: 34.13614, lng: -118.29404 } }, time: "3:22 PM", date: "Today", isOwn: false },
+    { id: 22, sender: "You",  initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "sos", sos: { location: { street: "350 S Grand Ave", city: "Los Angeles, CA", lat: 34.05374, lng: -118.25149 } }, time: "4:08 PM", date: "Today", isOwn: true, read: false },
+    { id: 24, type: "event", text: "🚶 Tanya left Home", date: "Today" },
+    { id: 25, type: "event", text: "🗂 Lake Cabin has been archived by Mom", date: "Today" },
+    { id: 26, type: "event", text: "🗑 Old Apartment has been deleted by Dad", date: "Today" },
   ],
   /* Work — contains a shared PDF */
   2: [
+    { id: 15, type: "event", text: "👋 Alex joined the Circle", date: "Today" },
     { id: 1, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "text", text: "Stand-up in 10 minutes", time: "9:50 AM", date: "Today", isOwn: false },
     { id: 2, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text", text: "On it, joining now", time: "9:51 AM", date: "Today", isOwn: true, read: true },
     { id: 3, sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "text", text: "Running 2 min late", time: "9:58 AM", date: "Today", isOwn: false },
+    { id: 13, type: "event", text: "📍 Ben arrived at Office", date: "Today" },
     { id: 4, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "text", text: "No worries, we just started. Here are the meeting notes:", time: "10:00 AM", date: "Today", isOwn: false },
     { id: 5, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "file",  file: { name: "Meeting_Notes_May2026.pdf", size: "84 KB", pages: 3 }, time: "10:01 AM", date: "Today", isOwn: false },
     { id: 6, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text", text: "Thanks, will review after the call 👍", time: "10:15 AM", date: "Today", isOwn: true, read: true },
-    { id: 7, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "checkin", checkin: { address: "19 Plympton Street", city: "Los Angeles, CA" }, time: "10:32 AM", date: "Today", isOwn: true, read: false },
-    { id: 8, sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "checkin", checkin: { address: "350 S Grand Ave", city: "Los Angeles, CA" }, time: "10:48 AM", date: "Today", isOwn: false },
-    { id: 9, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "location", location: { street: "1515 Abbot Kinney Blvd", city: "Venice, CA" }, time: "11:05 AM", date: "Today", isOwn: false },
-    { id: 10, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "location", location: { street: "1234 N Cahuenga Blvd", city: "Hollywood, CA" }, time: "11:08 AM", date: "Today", isOwn: true, read: true },
+    { id: 7, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "checkin", checkin: { address: "19 Plympton Street", city: "Los Angeles, CA", lat: 34.08247, lng: -118.32104 }, time: "10:32 AM", date: "Today", isOwn: true, read: false },
+    { id: 8, sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "checkin", checkin: { address: "350 S Grand Ave", city: "Los Angeles, CA", lat: 34.05374, lng: -118.25149 }, time: "10:48 AM", date: "Today", isOwn: false },
+    { id: 9, sender: "Tanya", initial: "T", gradient: "linear-gradient(135deg,#F0922A,#EFC03A)", type: "location", location: { street: "1515 Abbot Kinney Blvd", city: "Venice, CA", lat: 33.99139, lng: -118.46591 }, time: "11:05 AM", date: "Today", isOwn: false },
+    { id: 10, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "location", location: { street: "1234 N Cahuenga Blvd", city: "Hollywood, CA", lat: 34.09781, lng: -118.32963 }, time: "11:08 AM", date: "Today", isOwn: true, read: true },
+    { id: 11, sender: "Ben",   initial: "B", gradient: "linear-gradient(135deg,#F857A6,#FF5858)", type: "sos", sos: { location: { street: "8800 Sunset Blvd", city: "West Hollywood, CA", lat: 34.09075, lng: -118.38590 } }, time: "11:32 AM", date: "Today", isOwn: false },
+    { id: 12, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "sos", sos: { location: { street: "5905 Wilshire Blvd", city: "Los Angeles, CA", lat: 34.06390, lng: -118.35920 } }, time: "12:05 PM", date: "Today", isOwn: true, read: false },
+    { id: 14, type: "event", text: "🚶 Tanya left Office", date: "Today" },
+    { id: 16, type: "event", text: "🚪 Chris left the Circle", date: "Today" },
   ],
   /* Beersaurus — contains a shared location */
   3: [
+    { id: 8, type: "event", text: "👋 Jo joined the Circle", date: "May 5" },
     { id: 1, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "text",     text: "Anyone up for drinks Friday?", time: "8:12 PM", date: "May 5", isOwn: false },
     { id: 2, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text",     text: "Definitely 🍻", time: "8:14 PM", date: "May 5", isOwn: true, read: true },
     { id: 3, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "text",     text: "Great, 8pm — I'll send the spot", time: "8:15 PM", date: "May 5", isOwn: false },
-    { id: 4, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "location", location: { street: "1515 Abbot Kinney Blvd", city: "Venice, CA" }, time: "8:16 PM", date: "May 5", isOwn: false },
+    { id: 4, sender: "Mom",   initial: "M", gradient: "linear-gradient(135deg,#9B87F5,#7EC8E3)", type: "location", location: { street: "1515 Abbot Kinney Blvd", city: "Venice, CA", lat: 33.99139, lng: -118.46591 }, time: "8:16 PM", date: "May 5", isOwn: false },
     { id: 5, sender: "You",   initial: "S", gradient: "linear-gradient(135deg,#0F6EFF,#00C7BE)", type: "text",     text: "Perfect, see you there!", time: "8:17 PM", date: "May 5", isOwn: true, read: false },
+    { id: 6, type: "event", text: "🗂 Rooftop Bar has been archived by Mom", date: "May 5" },
+    { id: 7, type: "event", text: "🗑 Old Pub has been deleted by Mom", date: "May 5" },
   ],
 };
 
@@ -87,6 +101,7 @@ function ChatCircleItem({ circle, active, onClick }) {
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div style={{ fontSize: 14, color: "#6B7280", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
             {last ? (() => {
+              if (last.type === "event") return last.text;
               const prefix = last.isOwn ? "You" : last.sender;
               const body = last.type === "location" ? "📍 Location" : last.type === "image" ? "🖼 Photo" : last.type === "file" ? "📎 " + last.file.name : last.type === "sos" ? "🆘 SOS Alert" : last.type === "checkin" ? "📍 Checked in" : last.text;
               return `${prefix}: ${body}`;
@@ -139,49 +154,99 @@ function ChatListPanel({ selected, onSelect, isMobile }) {
   );
 }
 
-/* ── Message bubble content by type ── */
-function LocationBubble({ location, isOwn, sender }) {
-  const textColor = isOwn ? "#fff" : "#1B1E28";
-  const subColor  = isOwn ? "rgba(255,255,255,0.7)" : "#6B7280";
+/* ── Static OSM map snippet centered on lat/lng ── */
+function StaticMapTiles({ lat, lng, width, height, zoom = 15 }) {
+  const n = Math.pow(2, zoom);
+  const sinLat = Math.sin((lat * Math.PI) / 180);
+  const worldX = ((lng + 180) / 360) * n * 256;
+  const worldY = (0.5 - Math.log((1 + sinLat) / (1 - sinLat)) / (4 * Math.PI)) * n * 256;
+  const originX = worldX - width / 2;
+  const originY = worldY - height / 2;
+  const tiles = [];
+  for (let tx = Math.floor(originX / 256); tx <= Math.floor((originX + width) / 256); tx++) {
+    for (let ty = Math.floor(originY / 256); ty <= Math.floor((originY + height) / 256); ty++) {
+      if (ty < 0 || ty >= n) continue;
+      tiles.push({ tx, ty, left: tx * 256 - originX, top: ty * 256 - originY });
+    }
+  }
   return (
-    <div style={{ width: 240, borderRadius: 14, overflow: "hidden", background: isOwn ? "#0F6EFF" : "#fff", boxShadow: isOwn ? "none" : "0 1px 4px rgba(0,0,0,0.08)" }}>
-      {!isOwn ? (
-        <div style={{ padding: "10px 14px 8px", background: "#fff", borderBottom: "1px solid #F0F2F7" }}>
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#0F6EFF", marginBottom: 2 }}>{sender}</div>
-          <div style={{ fontSize: 14, lineHeight: "20px", color: "#1B1E28" }}>Shared Location</div>
-        </div>
-      ) : (
-        <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
-          <div style={{ fontSize: 14, lineHeight: "20px", color: "#fff" }}>Shared Location</div>
-        </div>
-      )}
-      {/* Map placeholder */}
+    <div style={{ position: "absolute", inset: 0, overflow: "hidden", background: "#e8edf2" }}>
+      {tiles.map(t => (
+        <img
+          key={t.tx + "_" + t.ty}
+          src={"https://tile.openstreetmap.org/" + zoom + "/" + (((t.tx % n) + n) % n) + "/" + t.ty + ".png"}
+          width={256}
+          height={256}
+          draggable={false}
+          style={{ position: "absolute", left: t.left, top: t.top, display: "block" }}
+          alt=""
+        />
+      ))}
+    </div>
+  );
+}
+
+/* ── Avatar map pin (matches the Map screen markers) ── */
+function MapAvatarPin({ gradient, initial, size = 38 }) {
+  return (
+    <div style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%,-100%)", display: "flex", flexDirection: "column", alignItems: "center", pointerEvents: "none" }}>
       <div style={{
-        height: 110, position: "relative", overflow: "hidden",
-        background: "linear-gradient(160deg,#c7d8f0 0%,#dbe8f5 40%,#b8cde8 100%)",
+        width: size, height: size, borderRadius: "50%",
+        background: gradient || "linear-gradient(135deg,#0F6EFF,#00C7BE)",
+        border: "2.5px solid #fff", boxShadow: "0 3px 8px rgba(0,0,0,0.3)",
         display: "flex", alignItems: "center", justifyContent: "center",
+        fontSize: Math.round(size * 0.42), fontWeight: 700, color: "#fff",
       }}>
-        {/* Grid lines */}
-        {[0,1,2,3].map(i => (
-          <div key={i} style={{ position:"absolute", left: `${20+i*20}%`, top:0, bottom:0, borderLeft:"1px solid rgba(255,255,255,0.35)" }} />
-        ))}
-        {[0,1,2].map(i => (
-          <div key={i} style={{ position:"absolute", top: `${25+i*25}%`, left:0, right:0, borderTop:"1px solid rgba(255,255,255,0.35)" }} />
-        ))}
-        {/* Roads */}
-        <div style={{ position:"absolute", top:"42%", left:0, right:0, height:8, background:"rgba(255,255,255,0.5)", borderRadius:4 }} />
-        <div style={{ position:"absolute", left:"38%", top:0, bottom:0, width:8, background:"rgba(255,255,255,0.5)", borderRadius:4 }} />
-        {/* Pin */}
-        <div style={{ position:"absolute", display:"flex", flexDirection:"column", alignItems:"center" }}>
-          <div style={{ width:36, height:36, borderRadius:"50% 50% 50% 0", transform:"rotate(-45deg)", background: "#0F6EFF", boxShadow:"0 2px 8px rgba(0,0,0,0.25)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-            <div style={{ width:12, height:12, borderRadius:"50%", background: "#fff", transform:"rotate(45deg)" }} />
-          </div>
-        </div>
+        {initial}
+      </div>
+      <div style={{ width: 0, height: 0, borderLeft: "5px solid transparent", borderRight: "5px solid transparent", borderTop: "7px solid #fff", filter: "drop-shadow(0 2px 2px rgba(0,0,0,0.2))", marginTop: -1 }} />
+    </div>
+  );
+}
+
+/* ── "View on map" action button for location cards ── */
+function ViewMapButton({ isOwn }) {
+  const [hov, setHov] = useState(false);
+  const bg = isOwn
+    ? (hov ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.16)")
+    : (hov ? "#DCE7FF" : "#EBF2FF");
+  return (
+    <button
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        width: "100%", height: 32, borderRadius: 4, marginTop: 8,
+        background: bg,
+        border: "none", cursor: "pointer",
+        fontSize: 13, fontWeight: 700, color: isOwn ? "#fff" : "#0F6EFF",
+        transition: "background 0.15s",
+        fontFamily: '"Google Sans", sans-serif',
+      }}
+    >View on Map</button>
+  );
+}
+
+/* ── Message bubble content by type ── */
+function LocationBubble({ location, isOwn, sender, gradient, initial }) {
+  const hasCoords = typeof location.lat === "number" && typeof location.lng === "number";
+  return (
+    <div style={{ width: 240, borderRadius: 14, overflow: "hidden", background: "#fff", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
+      <div style={{ padding: "10px 14px 8px", background: "#fff", borderBottom: "1px solid #F0F2F7" }}>
+        {!isOwn && <div style={{ fontSize: 11, fontWeight: 700, color: "#0F6EFF", marginBottom: 2 }}>{sender}</div>}
+        <div style={{ fontSize: 14, lineHeight: "20px", color: "#1B1E28" }}>Shared Location</div>
+      </div>
+      {/* Map */}
+      <div style={{ height: 110, position: "relative", overflow: "hidden", background: "#e8edf2" }}>
+        {hasCoords && (
+          <StaticMapTiles lat={location.lat} lng={location.lng} width={240} height={110} zoom={15} />
+        )}
+        <MapAvatarPin gradient={gradient} initial={initial} />
       </div>
       {/* Info */}
       <div style={{ padding: "10px 12px" }}>
-        <div style={{ fontSize: 14, fontWeight: 700, color: textColor, marginBottom: 2 }}>{location.street}</div>
-        <div style={{ fontSize: 11, color: subColor, lineHeight: "16px" }}>{location.city}</div>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#1B1E28", marginBottom: 2 }}>{location.street}</div>
+        <div style={{ fontSize: 11, color: "#6B7280", lineHeight: "16px" }}>{location.city}</div>
+        <ViewMapButton isOwn={false} />
       </div>
     </div>
   );
@@ -212,7 +277,7 @@ function FileBubble({ file, isOwn }) {
   const textColor = isOwn ? "#0F6EFF" : "#1B1E28";
   const subColor = isOwn ? "rgba(15,110,255,0.6)" : "#6B7280";
   return (
-    <div style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", background: "#fff", borderRadius:14, width:240, boxShadow: isOwn ? "none" : "0 1px 4px rgba(0,0,0,0.08)" }}>
+    <div style={{ display:"flex", alignItems:"center", gap:10, padding:"10px 14px", background: "#fff", borderRadius:14, width:240, boxShadow: isOwn ? "0 2px 8px rgba(15,110,255,0.28)" : "0 1px 4px rgba(0,0,0,0.08)" }}>
       {/* PDF icon */}
       <div style={{ width:40, height:48, borderRadius:6, background:"#FF3B30", flexShrink:0, display:"flex", flexDirection:"column", alignItems:"center", justifyContent:"center", position:"relative" }}>
         <span style={{ fontSize:10, fontWeight:800, color:"#fff", letterSpacing:0.5 }}>PDF</span>
@@ -227,93 +292,68 @@ function FileBubble({ file, isOwn }) {
 }
 
 function SOSBubble({ msg }) {
-  const [hovMap, setHovMap] = useState(false);
-  const isOwn = msg.isOwn;
-  const loc = msg.sos && msg.sos.location;
-  const br = isOwn ? "18px 18px 4px 18px" : "18px 18px 18px 4px";
+  const { sos, isOwn, sender, gradient, initial } = msg;
+  const loc = sos && sos.location;
+  const hasCoords = loc && typeof loc.lat === "number" && typeof loc.lng === "number";
   return (
-    <div style={{ width: 280, background: "#FFF0F0", border: "1px solid #FFD5D3", borderRadius: br, overflow: "hidden", boxShadow: "0 1px 4px rgba(0,0,0,0.08)" }}>
-      {/* header */}
-      <div style={{ padding: "12px 14px 10px" }}>
+    <div style={{ width: 240, borderRadius: 14, overflow: "hidden", background: "#FF3B30", boxShadow: "0 2px 8px rgba(255,59,48,0.3)" }}>
+      {/* Header */}
+      <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
         {!isOwn && (
-          <div style={{ fontSize: 11, fontWeight: 700, color: "#FF3B30", marginBottom: 6 }}>{msg.sender} needs help</div>
+          <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.85)", marginBottom: 4 }}>{sender} needs help</div>
         )}
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-          <svg width="22" height="22" viewBox="0 0 512 512" fill="#FF3B30" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+          <svg width="20" height="20" viewBox="0 0 512 512" fill="#fff" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
             <path d="m265.615 199.5h-23c-8.271 0-15 6.729-15 15v83c0 8.271 6.729 15 15 15h23c8.271 0 15-6.729 15-15v-83c0-8.271-6.729-15-15-15z"/>
             <path d="m256 0c-141.159 0-256 114.841-256 256s114.841 256 256 256 256-114.841 256-256-114.841-256-256-256zm-95.063 331.263c-9.413 7.2-21.957 11.157-35.349 11.157-.102 0-.202 0-.304 0-27.207-.122-56.122-17.099-56.122-48.321 0-8.284 6.716-15 15-15s15 6.716 15 15c0 13.262 16.105 18.276 26.256 18.321.049 0 .1.001.151.001 5.641 0 23.189-1.401 23.343-18.604.103-11.417-7.367-15.812-31.407-24.059-.828-.284-3.402-1.107-3.863-1.27-14.952-5.282-46.063-16.273-45.756-50.654.136-15.211 6.52-28.414 17.974-37.177 9.484-7.255 22.112-11.227 35.653-11.157 27.207.122 56.122 17.099 56.122 48.321 0 8.284-6.716 15-15 15s-15-6.716-15-15c0-13.262-16.105-18.276-26.256-18.321-5.447-.063-23.339 1.244-23.494 18.603-.077 8.568 3.312 13.806 22.942 21.08.172.054 4.437 1.521 6.413 2.199 11.271 3.866 22.926 7.864 32.578 14.896 12.811 9.333 19.235 22.054 19.094 37.807-.137 15.212-6.52 28.415-17.975 37.178zm149.678-33.763c0 24.813-20.187 45-45 45h-23c-24.813 0-45-20.187-45-45v-83c0-24.813 20.187-45 45-45h23c24.813 0 45 20.187 45 45zm115.524 33.763c-9.413 7.2-21.957 11.157-35.349 11.157-.102 0-.202 0-.304 0-27.207-.122-56.122-17.099-56.122-48.321 0-8.284 6.716-15 15-15s15 6.716 15 15c0 13.262 16.104 18.276 26.256 18.321 5.486-.001 23.339-1.244 23.494-18.603.103-11.417-7.367-15.812-31.407-24.059-.828-.284-3.402-1.107-3.863-1.27-14.951-5.282-46.063-16.272-45.755-50.654.136-15.211 6.52-28.414 17.974-37.177 9.413-7.2 21.956-11.158 35.349-11.158.101 0 .202.001.304.001 27.207.122 56.122 17.099 56.122 48.321 0 8.284-6.716 15-15 15s-15-6.716-15-15c0-13.262-16.105-18.276-26.256-18.321-5.511-.004-23.338 1.244-23.494 18.603-.077 8.568 3.312 13.806 22.941 21.08.172.054 4.437 1.521 6.413 2.199 11.271 3.866 22.926 7.864 32.578 14.896 12.811 9.334 19.235 22.054 19.094 37.808-.137 15.211-6.521 28.414-17.975 37.177z"/>
           </svg>
-          <div style={{ fontSize: 15, fontWeight: 700, color: "#FF3B30", lineHeight: "20px" }}>SOS Alert</div>
+          <div style={{ fontSize: 15, fontWeight: 700, color: "#fff", lineHeight: "20px" }}>SOS Alert</div>
         </div>
       </div>
-      {/* location */}
-      {loc && (
-        <div style={{ borderTop: "1px solid #FFE0DF", padding: "10px 14px", display: "flex", alignItems: "flex-start", gap: 8 }}>
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" style={{ flexShrink: 0, marginTop: 1 }}>
-            <path d="M8 1.5C5.515 1.5 3.5 3.515 3.5 6c0 3.375 4.5 8.5 4.5 8.5S12.5 9.375 12.5 6c0-2.485-2.015-4.5-4.5-4.5zm0 6.125A1.625 1.625 0 1 1 8 4.25a1.625 1.625 0 0 1 0 3.375z" fill="#FF3B30"/>
-          </svg>
-          <div>
-            <div style={{ fontSize: 13, fontWeight: 600, color: "#1B1E28", lineHeight: "18px" }}>{loc.name}</div>
-            <div style={{ fontSize: 12, color: "#6B7280", lineHeight: "16px", marginTop: 2 }}>{loc.address}</div>
-          </div>
-        </div>
-      )}
-      {/* footer */}
-      <div style={{ borderTop: "1px solid #FFE0DF", padding: "10px 14px" }}>
-        <button
-          onMouseEnter={() => setHovMap(true)} onMouseLeave={() => setHovMap(false)}
-          style={{ width: "100%", height: 34, borderRadius: 100, background: hovMap ? "#FFE8E7" : "#fff", border: "1px solid #FFD5D3", fontSize: 13, fontWeight: 700, color: "#FF3B30", cursor: "pointer", transition: "background 0.15s" }}
-        >Open Map</button>
+      {/* Map */}
+      <div style={{ height: 110, position: "relative", overflow: "hidden", background: "#e8edf2" }}>
+        {hasCoords && (
+          <StaticMapTiles lat={loc.lat} lng={loc.lng} width={240} height={110} zoom={15} />
+        )}
+        <MapAvatarPin gradient={gradient} initial={initial} />
+      </div>
+      {/* Info */}
+      <div style={{ padding: "10px 12px" }}>
+        <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{loc.street}</div>
+        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", lineHeight: "16px" }}>{loc.city}</div>
+        <ViewMapButton isOwn />
       </div>
     </div>
   );
 }
 
 function CheckInBubble({ msg }) {
-  const { checkin, isOwn, sender } = msg;
-  // Border radii for grouped bubbles
-  const brText = isOwn ? "18px 18px 4px 4px"  : "18px 18px 4px 4px";
-  const brLoc  = isOwn ? "4px 18px 4px 18px"  : "18px 4px 18px 4px";
-  const textColor = isOwn ? "#fff" : "#1B1E28";
-  const subColor  = isOwn ? "rgba(255,255,255,0.7)" : "#6B7280";
+  const { checkin, isOwn, sender, gradient, initial } = msg;
+  const hasCoords = typeof checkin.lat === "number" && typeof checkin.lng === "number";
   return (
     <div>
-      <div style={{ width: 240, borderRadius: 14, overflow: "hidden", background: isOwn ? "#0F6EFF" : "#fff", boxShadow: isOwn ? "none" : "0 1px 4px rgba(0,0,0,0.08)" }}>
+      <div style={{ width: 240, borderRadius: 14, overflow: "hidden", background: "#0F6EFF", boxShadow: "0 2px 8px rgba(15,110,255,0.28)" }}>
         {/* Header */}
-        {!isOwn ? (
-          <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid #F0F2F7" }}>
-            <div style={{ fontSize: 11, fontWeight: 700, color: "#0F6EFF", marginBottom: 2 }}>{sender}</div>
-            <div style={{ fontSize: 14, lineHeight: "20px", color: "#1B1E28" }}>Checked in</div>
+        <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
+          {!isOwn && <div style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.85)", marginBottom: 2 }}>{sender}</div>}
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <img src="assets/icons/check-in.svg" width={20} height={20} alt=""
+              style={{ filter: "brightness(0) invert(1)", display: "block", flexShrink: 0 }} />
+            <div style={{ fontSize: 14, fontWeight: 700, lineHeight: "20px", color: "#fff" }}>Checked in</div>
           </div>
-        ) : (
-          <div style={{ padding: "10px 14px 8px", borderBottom: "1px solid rgba(255,255,255,0.2)" }}>
-            <div style={{ fontSize: 14, lineHeight: "20px", color: "#fff" }}>Checked in</div>
-          </div>
-        )}
-        {/* Map placeholder */}
-        <div style={{
-          height: 110, position: "relative", overflow: "hidden",
-          background: "linear-gradient(160deg,#c7d8f0 0%,#dbe8f5 40%,#b8cde8 100%)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-        }}>
-          {[0,1,2,3].map(i => (
-            <div key={i} style={{ position:"absolute", left:`${20+i*20}%`, top:0, bottom:0, borderLeft:"1px solid rgba(255,255,255,0.35)" }} />
-          ))}
-          {[0,1,2].map(i => (
-            <div key={i} style={{ position:"absolute", top:`${25+i*25}%`, left:0, right:0, borderTop:"1px solid rgba(255,255,255,0.35)" }} />
-          ))}
-          <div style={{ position:"absolute", top:"42%", left:0, right:0, height:8, background:"rgba(255,255,255,0.5)", borderRadius:4 }} />
-          <div style={{ position:"absolute", left:"38%", top:0, bottom:0, width:8, background:"rgba(255,255,255,0.5)", borderRadius:4 }} />
-          <div style={{ position:"absolute", display:"flex", flexDirection:"column", alignItems:"center" }}>
-            <div style={{ width:36, height:36, borderRadius:"50% 50% 50% 0", transform:"rotate(-45deg)", background:"#0F6EFF", boxShadow:"0 2px 8px rgba(0,0,0,0.25)", display:"flex", alignItems:"center", justifyContent:"center" }}>
-              <div style={{ width:12, height:12, borderRadius:"50%", background:"#fff", transform:"rotate(45deg)" }} />
-            </div>
-          </div>
+        </div>
+        {/* Map */}
+        <div style={{ height: 110, position: "relative", overflow: "hidden", background: "#e8edf2" }}>
+          {hasCoords && (
+            <StaticMapTiles lat={checkin.lat} lng={checkin.lng} width={240} height={110} zoom={15} />
+          )}
+          <MapAvatarPin gradient={gradient} initial={initial} />
         </div>
         {/* Info */}
         <div style={{ padding: "10px 12px" }}>
-          <div style={{ fontSize: 14, fontWeight: 700, color: textColor, marginBottom: 2 }}>{checkin.address}</div>
-          <div style={{ fontSize: 11, color: subColor, lineHeight: "16px" }}>{checkin.city}</div>
+          <div style={{ fontSize: 14, fontWeight: 700, color: "#fff", marginBottom: 2 }}>{checkin.address}</div>
+          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.7)", lineHeight: "16px" }}>{checkin.city}</div>
+          <ViewMapButton isOwn />
         </div>
       </div>
     </div>
@@ -323,7 +363,7 @@ function CheckInBubble({ msg }) {
 function MessageContent({ msg }) {
   if (msg.type === "sos")      return <SOSBubble      msg={msg} />;
   if (msg.type === "checkin")  return <CheckInBubble  msg={msg} />;
-  if (msg.type === "location") return <LocationBubble location={msg.location} isOwn={msg.isOwn} sender={msg.sender} />;
+  if (msg.type === "location") return <LocationBubble location={msg.location} isOwn={msg.isOwn} sender={msg.sender} gradient={msg.gradient} initial={msg.initial} />;
   if (msg.type === "image")    return <ImageBubble    image={msg.image}       isOwn={msg.isOwn} />;
   if (msg.type === "file")     return <FileBubble     file={msg.file}         isOwn={msg.isOwn} />;
   // text
@@ -361,8 +401,31 @@ function DateSeparator({ label }) {
   );
 }
 
+/* ── System event notice (centered between messages) ── */
+function EventMessage({ msg }) {
+  return (
+    <div style={{ display: "flex", justifyContent: "center", marginBottom: 16 }}>
+      <div style={{
+        background: "rgba(255,255,255,0.72)",
+        backdropFilter: "blur(4px)",
+        color: "#9CA3AF",
+        borderRadius: 100,
+        padding: "5px 14px",
+        fontSize: 11,
+        fontWeight: 700,
+        lineHeight: "16px",
+        textAlign: "center",
+        maxWidth: 340,
+      }}>
+        {msg.text}
+      </div>
+    </div>
+  );
+}
+
 /* ── Messages ── */
 function ChatMessage({ msg, showSender }) {
+  if (msg.type === "event") return <EventMessage msg={msg} />;
   if (msg.isOwn) {
     return (
       <div style={{ display: "flex", justifyContent: "flex-end", marginBottom: 16, paddingLeft: 56 }}>
@@ -395,26 +458,6 @@ function ChatMessage({ msg, showSender }) {
         <div style={{ fontSize: 11, color: "#9CA3AF", marginTop: 3 }}>{msg.time}</div>
       </div>
     </div>
-  );
-}
-
-function QuickChip({ icon, label }) {
-  const [hov, setHov] = useState(false);
-  return (
-    <button
-      onMouseEnter={() => setHov(true)}
-      onMouseLeave={() => setHov(false)}
-      style={{
-        display: "flex", alignItems: "center", gap: 5,
-        height: 32, borderRadius: 100, padding: "0 12px",
-        background: hov ? "#F5F7FA" : "#fff",
-        border: "1px solid #E2E6EF", cursor: "pointer",
-        fontSize: 14, fontWeight: 500, color: "#1B1E28",
-        transition: "background 0.15s", flexShrink: 0,
-      }}
-    >
-      {icon}{label}
-    </button>
   );
 }
 
@@ -568,12 +611,6 @@ function ChatPanel({ circle, onBack, isMobile }) {
       {/* Quick actions + Input */}
       <div style={{ flexShrink: 0 }}>
         <div style={{ maxWidth: 640, width: "100%", margin: "0 auto", padding: "0 8px 16px", position: "relative" }}>
-          {/* Quick chips */}
-          <div style={{ display: "flex", gap: 8, flexWrap: "nowrap", overflowX: "auto", marginBottom: 10 }}>
-            <QuickChip icon={<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#1B1E28" strokeWidth="2"/><path d="M9 12l2 2 4-4" stroke="#1B1E28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>} label="I'm here" />
-            <QuickChip icon={<svg width="14" height="14" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="#1B1E28" strokeWidth="2"/><path d="M9 12l2 2 4-4" stroke="#1B1E28" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>} label="I'm okay" />
-          </div>
-
           {/* Input field */}
           <div
             onClick={() => inputRef.current?.focus()}
