@@ -2,13 +2,13 @@
 
 const SETTINGS_NAV = [
   { id: "profile",    label: "Profile",             desc: "Name, avatar, contact info.",
-    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#0F6EFF" strokeWidth="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="#0F6EFF" strokeWidth="1.8" strokeLinecap="round"/></svg> },
+    icon: <Icon src="assets/icons/profile.svg" size={24} color="#0F6EFF" /> },
   { id: "security",   label: "Security",            desc: "Password & login.",
-    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4" stroke="#0F6EFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg> },
-  { id: "identity",   label: "Safety & Emergency",  desc: "SOS, trusted contacts, safe check-ins, medical details, and identity alerts for the people in your Circles.",
-    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#0F6EFF" strokeWidth="1.8"/><path d="M3 9l9 6 9-6" stroke="#0F6EFF" strokeWidth="1.8" strokeLinecap="round"/></svg> },
+    icon: <Icon src="assets/icons/lock.svg" size={24} color="#0F6EFF" /> },
+  { id: "identity",   label: "Safety & Emergency",  desc: "Fast, trusted contacts, safe check-ins, medical details, and identity alerts for the people in your Circles.",
+    icon: <Icon src="assets/icons/shield.svg" size={24} color="#0F6EFF" /> },
   { id: "notifs",     label: "Notifications",       desc: "Push, quiet hours and per-event alerts.",
-    icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="#0F6EFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/><path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="#0F6EFF" strokeWidth="1.8" strokeLinecap="round"/></svg> },
+    icon: <Icon src="assets/icons/notification.svg" size={24} color="#0F6EFF" /> },
   { id: "privacy",    label: "Privacy & safety",    desc: "Pause sharing, ghost mode, precision.",
     icon: <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#0F6EFF" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"/></svg> },
   { id: "whocansee",  label: "Who can see me",      desc: "Revoke circle viewers at any time.",
